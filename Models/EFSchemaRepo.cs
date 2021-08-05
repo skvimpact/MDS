@@ -14,6 +14,8 @@ namespace MDS.Models
             context = ctx;
         }
 
-        public IQueryable<SchemaItem> SchemaItems => context.SchemaItems;
+        public IQueryable<SchemaItem> SchemaItems =>
+            context.SchemaItems;
+           
     }
 }
