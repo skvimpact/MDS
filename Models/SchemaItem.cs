@@ -10,5 +10,8 @@ namespace MDS.Models
     {
         public int IntMessageID { get; set; }
         public int IntMessageLineID { get; set; }
+        public string ElementName { get; set; }
+        public int LineType { get; set; }
+        public int ParentElementID { get; set; }
     }
 }

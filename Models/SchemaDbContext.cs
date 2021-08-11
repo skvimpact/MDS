@@ -23,6 +23,16 @@ namespace MDS.Models
             modelBuilder.Entity<SchemaItem>()
                 .Property(c => c.IntMessageLineID)
                 .HasColumnName("Int_ Message Line ID");
+            modelBuilder.Entity<SchemaItem>()
+                .Property(c => c.ElementName)
+                .HasColumnName("Element Name");
+            modelBuilder.Entity<SchemaItem>()
+                .Property(c => c.LineType)
+                .HasColumnName("Line Type");
+            modelBuilder.Entity<SchemaItem>()
+                .Property(c => c.ParentElementID)
+                .HasColumnName("Parent Element ID");
+
         }
     }
 }
