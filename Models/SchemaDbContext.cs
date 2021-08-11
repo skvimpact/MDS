@@ -12,10 +12,17 @@ namespace MDS.Models
         public DbSet<SchemaItem> SchemaItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-         
-            modelBuilder.Entity<SchemaItem>().HasKey(u => new {u.IntMessageID, u.IntMessageLineID });
-            modelBuilder.Entity<SchemaItem>().ToTable("Integration Message Schema");
+        {        
+            modelBuilder.Entity<SchemaItem>()
+                .ToTable("Integration Message Schema");
+            modelBuilder.Entity<SchemaItem>()
+                .HasKey(k => new { k.IntMessageID, k.IntMessageLineID });
+            modelBuilder.Entity<SchemaItem>()
+                .Property(c => c.IntMessageID)
+                .HasColumnName("Int_ Message ID");
+            modelBuilder.Entity<SchemaItem>()
+                .Property(c => c.IntMessageLineID)
+                .HasColumnName("Int_ Message Line ID");
         }
     }
 }
