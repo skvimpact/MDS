@@ -8,11 +8,6 @@ using System.Xml;
 
 namespace MDS.Controllers
 {
-    public class A
-    {
-        public int ID;
-        public int ParentID;
-    }
     public class HomeController : Controller
     {
         private ISchemaRepo repository;
@@ -30,7 +25,7 @@ namespace MDS.Controllers
             document.InsertBefore(xmlDeclaration, document.DocumentElement);
 
             var items = repository.SchemaItems.ToList();
-            
+
             var xmlElements = new Dictionary<int, XmlElement>();
             var xmlAttributes = new Dictionary<int, XmlAttribute>();
 
@@ -80,37 +75,56 @@ namespace MDS.Controllers
                         throw new InvalidOperationException("unknown item type");
                 }
             }
-            /*
-                foreach (var item in elements)
-            { 
-                if (item.ParentElementID == 0)                
-                    document
-                        .AppendChild(xmlElements[item.IntMessageLineID]);                
-                else
-                    xmlElements[item.ParentElementID]
-                        .AppendChild(xmlElements[item.IntMessageLineID]);               
-
-                item.Indentation = repository.Indentation(item.IntMessageLineID);
-            }
-
-            foreach (var item in attributes)
-            {
-                xmlElements[item.ParentElementID].Attributes.Append(xmlAttributes[item.IntMessageLineID]);
-            }
-            */
-                //XmlAttribute checkedOut = document.CreateAttribute("checkedout");
-                //checkedOut.Value = "no";
-                //xmlElements[100000].Attributes.Append(checkedOut);
-
 
             xmlElements[110000].AppendChild(xmlElements[120000].CloneNode(true));
             xmlElements[110000].AppendChild(xmlElements[120000].CloneNode(true));
             xmlElements[110000].AppendChild(xmlElements[120000].CloneNode(true));
 
-             var s = document.OuterXml;
+            var s = document.OuterXml;
 
             // return this.Ok(repository.SchemaItems);
-            return this.Ok(document.OuterXml);
-        }      
+            return Ok(document.OuterXml);
+        }
+
+        [HttpGet]
+        public IActionResult Index2()
+        {
+            XmlDocument document = new XmlDocument();
+            XmlDeclaration xmlDeclaration = document.CreateXmlDeclaration("1.0", "UTF-8", null);
+            document.InsertBefore(xmlDeclaration, document.DocumentElement);
+
+            XmlElement root = document.CreateElement("xs", "schema", "http://www.w3.org/2001/XMLSchema");
+
+            //XmlAttribute xs = document.CreateAttribute(string.Empty, "xs", string.Empty);
+            //xs.Value = "http://www.w3.org/2001/XMLSchema";
+
+            XmlAttribute attributeFormDefault = document.CreateAttribute(string.Empty, "attributeFormDefault", string.Empty);
+            attributeFormDefault.Value = "unqualified";
+
+            XmlAttribute elementFormDefault = document.CreateAttribute(string.Empty, "elementFormDefault", string.Empty);
+            elementFormDefault.Value = "qualified";
+
+            //root.Attributes.Append(xs);
+            root.Attributes.Append(attributeFormDefault);
+            root.Attributes.Append(elementFormDefault);
+
+            document.AppendChild(root);
+
+
+            XmlElement rootElement = document.CreateElement("xs", "element", "");
+
+            XmlAttribute name = document.CreateAttribute("name");
+            name.Value = "myRootName";
+            rootElement.Attributes.Append(name);
+
+            XmlAttribute type = document.CreateAttribute("type");
+            type.Value = "ct_myRootName";
+            rootElement.Attributes.Append(type);
+
+            root.AppendChild(rootElement);
+
+            var s = document.OuterXml;
+            return Ok(document.OuterXml);
+        }
     }
 }
