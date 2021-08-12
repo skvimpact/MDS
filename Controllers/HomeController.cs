@@ -8,11 +8,6 @@ using System.Xml;
 
 namespace MDS.Controllers
 {
-    public class A
-    {
-        public int ID;
-        public int ParentID;
-    }
     public class HomeController : Controller
     {
         private ISchemaRepo repository;
@@ -80,28 +75,6 @@ namespace MDS.Controllers
                         throw new InvalidOperationException("unknown item type");
                 }
             }
-            /*
-                foreach (var item in elements)
-            { 
-                if (item.ParentElementID == 0)                
-                    document
-                        .AppendChild(xmlElements[item.IntMessageLineID]);                
-                else
-                    xmlElements[item.ParentElementID]
-                        .AppendChild(xmlElements[item.IntMessageLineID]);               
-
-                item.Indentation = repository.Indentation(item.IntMessageLineID);
-            }
-
-            foreach (var item in attributes)
-            {
-                xmlElements[item.ParentElementID].Attributes.Append(xmlAttributes[item.IntMessageLineID]);
-            }
-            */
-                //XmlAttribute checkedOut = document.CreateAttribute("checkedout");
-                //checkedOut.Value = "no";
-                //xmlElements[100000].Attributes.Append(checkedOut);
-
 
             xmlElements[110000].AppendChild(xmlElements[120000].CloneNode(true));
             xmlElements[110000].AppendChild(xmlElements[120000].CloneNode(true));
