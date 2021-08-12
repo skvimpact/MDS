@@ -12,7 +12,10 @@ namespace MDS.Models
             (new [] { new SchemaItem { IntMessageID=3, IntMessageLineID = 9},
             new SchemaItem { IntMessageID=4, IntMessageLineID = 9},
             new SchemaItem { IntMessageID=5, IntMessageLineID = 9}}).AsQueryable();
-            
-            
+
+        public int Indentation(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
