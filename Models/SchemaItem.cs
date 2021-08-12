@@ -13,5 +13,7 @@ namespace MDS.Models
         public string ElementName { get; set; }
         public int LineType { get; set; }
         public int ParentElementID { get; set; }
+        public string Value { get; set; }
+        public int Indentation { get; set; }
     }
 }
