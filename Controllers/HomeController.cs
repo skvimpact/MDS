@@ -83,7 +83,8 @@ namespace MDS.Controllers
             var s = document.OuterXml;
 
             // return this.Ok(repository.SchemaItems);
-            return Ok(document.OuterXml);
+            //return Ok(document.OuterXml);
+            return Ok(XsdInferer.Infer());
         }
 
         [HttpGet]
