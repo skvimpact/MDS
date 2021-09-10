@@ -5,106 +5,48 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Linq;
 using System.Xml.Schema;
 
 namespace MDS
 {
     public class XsdInferer
     {
-        private static string xml =
-@"<?xml version = ""1.0"" ?>
-<library>
-
-    <books>
-        <book>
-        <title> To Kill a Mockingbird</title>        
-        </book>
-        <book checkedout = ""no"">
-        <title> To Kill a Mockingbird</title>
-        <author>Harper Lee</author>
-        </book>
-        <book checkedout = ""no"">
-        <title>A</title>
-        <author>Harper Lee</author>
-        </book>
-        <book checkedout = ""no"">
-        <title>B</title>
-        <author>Harper Lee2</author>
-        </book>
-        <book checkedout = ""no"">
-        <title>C</title>
-        <author>Harper Lee3</author>
-        </book>
-    </books>
-
-
-    <books>
-        <book>
-        <title> To Kill a Mockingbird</title>        
-        </book>
-        <m1 a=""a"">m1</m1>
-    </books>
-    <books>
-        <book>
-        <title> To Kill a Mockingbird</title>        
-        </book>
-        <m1 a=""a"">m1</m1>
-    </books>
-    <books>
-        <m1 a=""a"">m1</m1>
-     </books>
-
-
-            <!--<movies>
-                <movie checkedout = ""no"">
-                <title> King Kong</title>
-                <year>1933</year>
-                    <book checkedout = ""no"">
-                    <title>AAA</title>
-                    <author>Harper Lee</author>
-                    </book>
-                </movie>
-                <movie checkedout = ""yes"">
-                <title> King Kong</title>
-                <year>2005</year>
-                    <book checkedout = ""no"">
-                    <title>BBB</title>
-                    <author>Harper Lee</author>
-                    </book>
-                </movie>
-                <movie checkedout = ""yes"">
-                <title> To Kill A Mockingbird</title>
-                <year>1962</year>
-                </movie>
-                <movie checkedout = ""no"">
-                <title> The Green Mile</title>
-                <year>1999</year>
-                </movie>
-            </movies>-->
-        </library>";
-        public static string Infer()
+        public static string Infer(string xml)
         {
-            string result = null;
-            MemoryStream memStream = new MemoryStream(Encoding.ASCII.GetBytes(xml));
-            //
-            XmlReader reader = XmlReader.Create(memStream);
-            //XmlSchemaSet schemaSet = new XmlSchemaSet();
-            //XmlSchemaInference schema = new XmlSchemaInference();
-            XmlSchemaSet schemaSet = new XmlSchemaInference().InferSchema(reader);
+            XmlSchemaSet schemaSet = new XmlSchemaInference().InferSchema(XmlReader.Create(new StringReader(xml)));
 
-            foreach (XmlSchema s in schemaSet.Schemas())
-            {
+            foreach (XmlSchema s in schemaSet.Schemas())            
                 using (var stringWriter = new StringWriter())
                 {
-                    using (var writer = XmlWriter.Create(stringWriter))
-                    {
-                        s.Write(writer);
-                    }
-
-                    result = stringWriter.ToString();
-                }
-            }
-            return result;
+                    using (var xmlWriter = XmlWriter.Create(stringWriter))                    
+                        s.Write(xmlWriter);                    
+                    //return $"{stringWriter}";
+                    return $"{XDocument.Load(new StringReader(stringWriter.ToString()))}";
+                }            
+            return null;
         }
+
+    }
+
+    public class XsdValidator
+    {
+        public static string Validate(string xsdMarkup, string xsdDocument)
+        {
+            XmlSchemaSet schemas = new XmlSchemaSet();
+            schemas.Add("", XmlReader.Create(new StringReader(xsdMarkup)));
+            XDocument xdocument = XDocument.Load(new StringReader(xsdDocument.ToString()));
+            //bool errors = false;
+            string message = null;
+            xdocument.Validate(schemas, (o, e) =>
+            {
+                //  Console.WriteLine("{0}", e.Message);
+                // errors = true;
+                message = e.Message;
+            });
+            return message;
+        }
+
+        
     }
 }

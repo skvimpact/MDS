@@ -15,5 +15,7 @@ namespace MDS.Models
         public int ParentElementID { get; set; }
         public string Value { get; set; }
         public int Indentation { get; set; }
+        public string XPath { get; set; }
+        public int Multiplicity { get; set; }
     }
 }

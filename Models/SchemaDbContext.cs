@@ -32,7 +32,8 @@ namespace MDS.Models
             modelBuilder.Entity<SchemaItem>()
                 .Property(c => c.ParentElementID)
                 .HasColumnName("Parent Element ID");
-
+            modelBuilder.Entity<SchemaItem>()
+                .Ignore(c => c.XPath);
         }
     }
 }
