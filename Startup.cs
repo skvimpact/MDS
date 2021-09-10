@@ -30,7 +30,8 @@ namespace MDS
                 opts.UseSqlServer(
                     Configuration["ConnectionStrings:SchemaConnection"]);
             });
-            services.AddScoped<ISchemaRepo, EFSchemaRepo>();
+            //services.AddScoped<ISchemaRepo, EFSchemaRepo>();
+            services.AddScoped<ISchemaRepo, SchemaRepoXml>();
             services.AddMvc();
         }
 

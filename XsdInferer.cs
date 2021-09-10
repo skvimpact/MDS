@@ -5,12 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Linq;
 using System.Xml.Schema;
 
 namespace MDS
 {
     public class XsdInferer
     {
+        /*
         private static string xml =
 @"<?xml version = ""1.0"" ?>
 <library>
@@ -81,8 +83,8 @@ namespace MDS
                 <year>1999</year>
                 </movie>
             </movies>-->
-        </library>";
-        public static string Infer()
+        </library>";*/
+        public static string Infer(string xml)
         {
             string result = null;
             MemoryStream memStream = new MemoryStream(Encoding.ASCII.GetBytes(xml));
@@ -104,6 +106,20 @@ namespace MDS
                     result = stringWriter.ToString();
                 }
             }
+
+
+//            XDocument doc1 = new XDocument(
+//    new XElement("Root",
+//        new XElement("Child1", "content1"),
+//        new XElement("Child2", "content1")
+//    )
+//);
+//            // doc1.v
+//            XmlSchemaSet schemas = new XmlSchemaSet();
+//            XmlReader r = XmlReader.Create("books.xml");
+
+//            XmlReader reader5 = XmlReader.Create(new StringReader(markup))
+//            schemas.Add("", "CustomersOrders.xsd");
             return result;
         }
     }

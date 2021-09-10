@@ -6,5 +6,8 @@ namespace MDS.Models
     {
         IQueryable<SchemaItem> SchemaItems { get; }
         int Indentation(int id);
+        string FullPath(int id);
+        string Xml { get; }
+        void Mutiply();
     }
 }
