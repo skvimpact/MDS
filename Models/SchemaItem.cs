@@ -8,8 +8,14 @@ namespace MDS.Models
 {
     public class SchemaItem
     {
-        //[]Int_ Message ID
         public int IntMessageID { get; set; }
         public int IntMessageLineID { get; set; }
+        public string ElementName { get; set; }
+        public int LineType { get; set; }
+        public int ParentElementID { get; set; }
+        public string Value { get; set; }
+        public int Indentation { get; set; }
+        public string XPath { get; set; }
+        public int Multiplicity { get; set; }
     }
 }

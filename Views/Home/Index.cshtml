@@ -1,5 +1,5 @@
-﻿@model SchemaItem
-@foreach (var p in Model.)
+﻿@model ISchemaRepo
+@foreach (var p in Model.SchemaItems)
 {
-    <partial name="ProductSummary" model="p" />
+    <partial name="ProductSummary" model="p.IntMessageID" />
 }
